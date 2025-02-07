@@ -1,17 +1,14 @@
 <?php
-
-// routes/api.php
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Route;
 
-// Public routes
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
-// Public routes for posts and comments (index & show)
+
 Route::prefix('posts')->group(function () {
     Route::get('/', [PostController::class, 'index']);
     Route::get('{post}', [PostController::class, 'show']);
@@ -39,7 +36,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/posts/{post}/comments/{comment}', [CommentController::class, 'destroy']);
 });
 
-// Fallback route for undefined routes
 Route::fallback(function () {
     return response()->json([
         'message' => 'Route not found.',
